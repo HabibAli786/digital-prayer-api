@@ -4,6 +4,7 @@
   "description": "A simple API for the my-digital-prayer-display application",
   "main": "index.js",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "nodemon": "^2.0.12"
   },
