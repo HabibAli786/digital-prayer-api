@@ -31,4 +31,9 @@ router.get('/prayertimes/currentdate', (req, res) => {
     res.json({ date : generateTimetable.FullDate() })
 })
 
+router.get('/prayertimes/notifications', (req, res) => {
+    // res.sendFile(process.cwd())
+    res.sendFile(process.cwd() + "/resources/iqra-logo.png")
+})
+
 module.exports = router
