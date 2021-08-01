@@ -9,6 +9,11 @@ app.use(express.static(__dirname + './resources'));
 app.use(express.static(__dirname + './services'));
 
 // Routes
+
+app.get('/', (req, res) => {
+  res.send('Welcome to the digital-prayer-api')
+})
+
 const PrayerTimes = require('./services/PrayerTimes/routes/timetable')
 app.use(PrayerTimes)
 
