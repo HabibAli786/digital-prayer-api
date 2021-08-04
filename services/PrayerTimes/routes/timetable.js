@@ -3,7 +3,7 @@ const generateTimetable = require('../generate-timetable')
 const csvtojson = require('csvtojson')
 
 router.get('/prayertimes', (req, res) => {
-    const day = generateTimetable.FullDate()
+    const day = generateTimetable.fullDate()
 
     csvtojson().fromFile(`resources/prayertimes-2021.csv`).then(source => {
         let current = []
@@ -11,7 +11,7 @@ router.get('/prayertimes', (req, res) => {
         source.forEach(element => {
             if(element.d_date == day) {
                 current.push(
-                    // {id: 0, date: day},
+                    {id: 0, date: day, day: generateTimetable.currentDay()},
                     {id: 1, salah: "Fajr", startTime: element.fajr_begins, jamaat: element.fajr_jamah},
                     {id: 2, salah: "Sunrise", startTime: element.sunrise},
                     {id: 3, salah: "Zuhr", startTime: element.zuhr_begins, jamaat: element.zuhr_jamah},
@@ -28,11 +28,18 @@ router.get('/prayertimes', (req, res) => {
 })
 
 router.get('/prayertimes/currentdate', (req, res) => {
-    res.json({ date : generateTimetable.FullDate() })
+    res.json({
+        day: generateTimetable.currentDay(), 
+        date : generateTimetable.fullDate() 
+    })
 })
 
 router.get('/prayertimes/notifications', (req, res) => {
-    // res.sendFile(process.cwd())
+    res.json({ notfications: generateTimetable.notfications() })
+})
+
+
+router.get('/prayertimes/logo', (req, res) => {
     res.sendFile(process.cwd() + "/resources/iqra-logo.png")
 })
 

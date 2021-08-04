@@ -21,6 +21,11 @@ const FullDate = () => {
     return `${day}/${month}/${year}`
 }
 
+const CurrentDay = () => {
+    const date = new Date()
+    return date.toLocaleString("default", { weekday: "long" })
+}
+
 const Notfications = () => {
     const notfications = ["Surah Mulk after Maghrib", "Dars after Zuhr", "Collections for Eid after Jummah", "Eid on the 23rd of July"]
     return notfications
@@ -28,6 +33,7 @@ const Notfications = () => {
 
 
 module.exports = {
-    FullDate : FullDate,
+    fullDate : FullDate,
+    currentDay : CurrentDay,
     notfications: Notfications
 }
