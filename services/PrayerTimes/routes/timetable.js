@@ -11,7 +11,7 @@ router.get('/prayertimes', (req, res) => {
         source.forEach(element => {
             if(element.d_date == day) {
                 current.push(
-                    {id: 0, date: day, day: generateTimetable.currentDay()},
+                    {id: 0, date: day, day: generateTimetable.currentDay(), fullDay: generateTimetable.fullDay()},
                     {id: 1, salah: "Fajr", startTime: element.fajr_begins, jamaat: element.fajr_jamah},
                     {id: 2, salah: "Sunrise", startTime: element.sunrise},
                     {id: 3, salah: "Zuhr", startTime: element.zuhr_begins, jamaat: element.zuhr_jamah},
