@@ -21,17 +21,17 @@ const FullDate = () => {
     return `${day}/${month}/${year}`
 }
 
-const CurrentDay = () => {
+const weekDay = () => {
     const date = new Date()
     return date.toLocaleString("default", { weekday: "long" })
 }
 
-const FullDay = () => {
+const dayMonth = () => {
     const date = new Date()
     const weekday = date.toLocaleString("default", { weekday: "long" })
     const dayOfMonth = date.getDate()
     const month = date.toLocaleString('default', { month: 'long' })
-    return weekday + " " + dayOfMonth + " " + month
+    return dayOfMonth + " " + month
 }
 
 const Notfications = () => {
@@ -41,8 +41,8 @@ const Notfications = () => {
 
 
 module.exports = {
-    fullDate : FullDate,
-    currentDay : CurrentDay,
-    fullDay: FullDay,
-    notfications: Notfications
+    "fullDate" : FullDate,
+    "weekday" : weekDay,
+    "dayMonth": dayMonth,
+    "notfications": Notfications
 }

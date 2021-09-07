@@ -3,15 +3,15 @@ const generateTimetable = require('../generate-timetable')
 const csvtojson = require('csvtojson')
 
 router.get('/prayertimes', (req, res) => {
-    const day = generateTimetable.fullDate()
+    const date = generateTimetable.fullDate()
 
     csvtojson().fromFile(`resources/prayertimes-2021.csv`).then(source => {
         let current = []
 
         source.forEach(element => {
-            if(element.d_date == day) {
+            if(element.d_date == date) {
                 current.push(
-                    {id: 0, date: day, day: generateTimetable.currentDay(), fullDay: generateTimetable.fullDay()},
+                    {id: 0, date: date, weekday: generateTimetable.weekday(), dayMonth: generateTimetable.dayMonth()},
                     {id: 1, salah: "Fajr", startTime: element.fajr_begins, jamaat: element.fajr_jamah},
                     {id: 2, salah: "Sunrise", startTime: element.sunrise},
                     {id: 3, salah: "Zuhr", startTime: element.zuhr_begins, jamaat: element.zuhr_jamah},
