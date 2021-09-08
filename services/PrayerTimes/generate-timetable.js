@@ -35,16 +35,23 @@ const Notfications = () => {
     return notfications
 }
 
-const newWeekDay = (date) => {
-    // const date = new Date()
-    // const weekday = date.toLocaleString("default", { weekday: "long" })
-    // const dayOfMonth = date.getDate()
-    // const month = date.toLocaleString('default', { month: 'long' })
-    // return dayOfMonth + " " + month
+const customWeekDay = (date) => {
+    const d = new Date();
+
+    const dateDay = date.slice(0, 2)
+    let dateMonth = date.slice(3, 5)
+    dateMonth = parseInt(dateMonth)-1
+    const dateYear = date.slice(6, 10)
+
+    // Set full date
+    d.setFullYear(dateYear, dateMonth, dateDay)
+
+    const weekday = d.toLocaleString("default", { weekday: "long" })
+    return weekday
 
 }
 
-const newDayMonthYear = (date) => {
+const customDayMonthYear = (date) => {
     const d = new Date();
     // d.setFullYear(2020, 11, 3);
 
@@ -68,6 +75,6 @@ module.exports = {
     "weekday" : weekDay,
     "dayMonth": dayMonth,
     "notfications": Notfications,
-    "newWeekDay": newWeekDay,
-    "newDayMonthYear": newDayMonthYear
+    "customWeekDay": customDayMonthYear,
+    "customDayMonthYear": customDayMonthYear
 }
