@@ -67,17 +67,12 @@ router.get('/prayertimes/:date', (req, res) => {
     }
 }) 
 
-router.get('/prayertimes/currentdate', (req, res) => {
-    res.json({
-        day: generateTimetable.currentDay(), 
-        date : generateTimetable.fullDate() 
-    })
-})
-
-router.get('/prayertimes/notifications', (req, res) => {
-    res.json({ notfications: generateTimetable.notfications() })
-})
-
+// router.get('/prayertimes/currentdate', (req, res) => {
+//     res.json({
+//         day: generateTimetable.currentDay(), 
+//         date : generateTimetable.fullDate() 
+//     })
+// })
 
 router.get('/prayertimes/logo', (req, res) => {
     res.sendFile(process.cwd() + "/resources/iqra-logo.png")

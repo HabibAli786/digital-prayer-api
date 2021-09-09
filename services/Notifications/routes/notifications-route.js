@@ -1,8 +1,8 @@
 const router = require('express').Router()
-const notfications = require('../notifications')
+const notifications = require('../notifications')
 
 router.get('/notifications', (req, res) => {
-    res.json({ notfications: notfications.all_notifications() })
+    res.json({ notifications: notifications.all_notifications() })
 })
 
 
