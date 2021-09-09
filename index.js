@@ -14,8 +14,11 @@ app.get('/', (req, res) => {
   res.send('Welcome to the digital-prayer-api')
 })
 
-const PrayerTimes = require('./services/PrayerTimes/routes/timetable')
+const PrayerTimes = require('./services/PrayerTimes/routes/timetable-route')
 app.use(PrayerTimes)
+
+const Notifications = require('./services/Notifications/routes/notifications-route')
+app.use(Notifications)
 
 app.listen(port, () => {
   console.log(`digital-prayer-times-api listening on http://localhost:${port}`)

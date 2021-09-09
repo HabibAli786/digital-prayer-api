@@ -53,20 +53,8 @@ const dayMonthYear = (date) => {
     return dayOfMonth + " " + month + " " + year
 }
 
-const Notfications = () => {
-    const notfications = [
-        "Surah Mulk after Maghrib", 
-        "Dars after Zuhr", 
-        "Collections for Eid after Jummah", 
-        "Eid on the 23rd of July"
-    ]
-    return notfications
-}
-
-
 module.exports = {
     "fullDate" : FullDate,
     "weekday" : weekDay,
     "dayMonthYear": dayMonthYear,
-    "notfications": Notfications,
 }
