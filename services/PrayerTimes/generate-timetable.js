@@ -17,17 +17,40 @@ const FullDate = () => {
     return `${day}/${month}/${year}`
 }
 
-const weekDay = () => {
-    const date = new Date()
-    return date.toLocaleString("default", { weekday: "long" })
+const weekDay = (date) => {
+    const d = new Date()
+
+    if(date) {
+        const dateDay = date.slice(0, 2)
+        let dateMonth = date.slice(3, 5)
+        dateMonth = parseInt(dateMonth)-1
+        const dateYear = date.slice(6, 10)
+
+        // Set full date
+        d.setFullYear(dateYear, dateMonth, dateDay)
+    }
+
+    const weekday = d.toLocaleString("default", { weekday: "long" })
+    return weekday
 }
 
-const dayMonth = () => {
-    const date = new Date()
-    const weekday = date.toLocaleString("default", { weekday: "long" })
-    const dayOfMonth = date.getDate()
-    const month = date.toLocaleString('default', { month: 'long' })
-    return dayOfMonth + " " + month
+const dayMonthYear = (date) => {
+    const d = new Date()
+    if(date) {
+        const dateDay = date.slice(0, 2)
+        let dateMonth = date.slice(3, 5)
+        dateMonth = parseInt(dateMonth)-1
+        const dateYear = date.slice(6, 10)
+
+        // Set full date
+        d.setFullYear(dateYear, dateMonth, dateDay)
+    }
+
+    const dayOfMonth = d.getDate()
+    const month = d.toLocaleString('default', { month: 'long' })
+    const year = d.getFullYear();
+
+    return dayOfMonth + " " + month + " " + year
 }
 
 const Notfications = () => {
@@ -40,46 +63,10 @@ const Notfications = () => {
     return notfications
 }
 
-const customWeekDay = (date) => {
-    const d = new Date();
-
-    const dateDay = date.slice(0, 2)
-    let dateMonth = date.slice(3, 5)
-    dateMonth = parseInt(dateMonth)-1
-    const dateYear = date.slice(6, 10)
-
-    // Set full date
-    d.setFullYear(dateYear, dateMonth, dateDay)
-
-    const weekday = d.toLocaleString("default", { weekday: "long" })
-    return weekday
-
-}
-
-const customDayMonthYear = (date) => {
-    const d = new Date();
-    // d.setFullYear(2020, 11, 3);
-
-    const dateDay = date.slice(0, 2)
-    let dateMonth = date.slice(3, 5)
-    dateMonth = parseInt(dateMonth)-1
-    const dateYear = date.slice(6, 10)
-
-    // Set full date
-    d.setFullYear(dateYear, dateMonth, dateDay)
-
-    const dayOfMonth = d.getDate()
-    const month = d.toLocaleString('default', { month: 'long' })
-    const year = d.getFullYear();
-    return dayOfMonth + " " + month + " " + year
-}
-
 
 module.exports = {
     "fullDate" : FullDate,
     "weekday" : weekDay,
-    "dayMonth": dayMonth,
+    "dayMonthYear": dayMonthYear,
     "notfications": Notfications,
-    "customWeekDay": customWeekDay,
-    "customDayMonthYear": customDayMonthYear
 }

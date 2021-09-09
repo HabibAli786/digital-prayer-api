@@ -11,7 +11,7 @@ router.get('/prayertimes', (req, res) => {
         source.forEach(element => {
             if(element.d_date == date) {
                 current.push(
-                    {id: 0, date: date, weekday: generateTimetable.weekday(), dayMonth: generateTimetable.dayMonth()},
+                    {id: 0, date: date, weekday: generateTimetable.weekday(), dayMonth: generateTimetable.dayMonthYear()},
                     {id: 1, salah: "Fajr", startTime: element.fajr_begins, jamaat: element.fajr_jamah},
                     {id: 2, salah: "Sunrise", startTime: element.sunrise},
                     {id: 3, salah: "Zuhr", startTime: element.zuhr_begins, jamaat: element.zuhr_jamah},
@@ -48,7 +48,7 @@ router.get('/prayertimes/:date', (req, res) => {
             source.forEach(element => {
                 if(element.d_date == newDate) {
                     current.push(
-                        {id: 0, date: date, weekday: generateTimetable.customWeekDay(newDate), dayMonthYear: generateTimetable.customDayMonthYear(newDate)},
+                        {id: 0, date: date, weekday: generateTimetable.weekday(newDate), dayMonthYear: generateTimetable.dayMonthYear(newDate)},
                         {id: 1, salah: "Fajr", startTime: element.fajr_begins, jamaat: element.fajr_jamah},
                         {id: 2, salah: "Sunrise", startTime: element.sunrise},
                         {id: 3, salah: "Zuhr", startTime: element.zuhr_begins, jamaat: element.zuhr_jamah},
