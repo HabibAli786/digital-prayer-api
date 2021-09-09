@@ -31,7 +31,12 @@ const dayMonth = () => {
 }
 
 const Notfications = () => {
-    const notfications = ["Surah Mulk after Maghrib", "Dars after Zuhr", "Collections for Eid after Jummah", "Eid on the 23rd of July"]
+    const notfications = [
+        "Surah Mulk after Maghrib", 
+        "Dars after Zuhr", 
+        "Collections for Eid after Jummah", 
+        "Eid on the 23rd of July"
+    ]
     return notfications
 }
 
@@ -75,6 +80,6 @@ module.exports = {
     "weekday" : weekDay,
     "dayMonth": dayMonth,
     "notfications": Notfications,
-    "customWeekDay": customDayMonthYear,
+    "customWeekDay": customWeekDay,
     "customDayMonthYear": customDayMonthYear
 }
