@@ -1,30 +1,35 @@
 const router = require('express').Router()
-const admin = require('../admin')
-const sqlite = require('sqlite3')
+const sqlite = require('sqlite3').verbose()
 
-let db = new sqlite.Database('../admin.db', (err) => {
+const admin = require('../admin')
+
+let db = new sqlite.Database('./services/Admin/admin.db', (err) => {
     if(err) {
       console.error(err.message)
     }
-    console.log("Connected to user database")
+    console.log("Connected to admin database")    
 })
 
-router.get('/login', (req, res) => {
-    const result = db.get('Select * from user', (err, results) => {
+router.post('/admin/register', (req, res) => {
+  const username = req.body.username
+  const password = req.body.password
+  console.log(username)
+  console.log(password)
+  const result = db.get('SELECT * FROM admin', (err, results) => {
+    if(err) {
+      console.log(err)
+    } else {
       console.log(results)
-      // res.render(results)
-    })
-    // console.log("Here is the result " + result)
-    // console.log(req.body)
+    }
   })
-  
-router.post('/register', (req, res) => {
-    // console.log(req.body)
-    // const result = db.all('Select * from user')
-    // console.log(result)
 })
+
+router.get('/admin/login', (req, res) => {
+  console.log(req.body)
+})
+
   
-router.post('/user', (req, res) => {
+router.post('/admin/user', (req, res) => {
     console.log(req.body)
 })
 
