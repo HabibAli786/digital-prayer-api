@@ -4,7 +4,7 @@
   "description": "A simple API for the my-digital-prayer-display application",
   "main": "index.js",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
