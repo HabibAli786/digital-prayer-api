@@ -1,8 +1,8 @@
 const router = require('express').Router()
 const sqlite = require('sqlite3').verbose()
 const bcrypt = require('bcrypt');
-const { response } = require('express');
-const { reset } = require('nodemon');
+const passport = require("passport");
+const passportLocal = require("passport-local").Strategy;
 
 const admin = require('../admin')
 
@@ -55,38 +55,55 @@ router.post('/admin/register', (req, res) => {
   // db.close()
 })
 
-router.post('/admin/login', (req, res) => {
-  const username = req.body.username
-  const password = req.body.password
-  db.serialize(() => {
-    db.get(`SELECT username, password FROM admin WHERE username="${username}";`, async (err, result) => {
-      try {
-        // if(err) {
-        //   throw new Error(err)
-        // }      
-        const dbUsername = result.username
-        const dbPassword = result.password
-        console.log(dbUsername)
-        console.log(dbPassword)
+router.post('/admin/login', (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if(err) throw err
+    if(!user) {
+       res.send("Unsuccesfully Authenticated")
+    } else {
+      req.logIn(user, err => {
+        if(err) throw err;
+        res.send('Succesfully Authenticated')
+        console.log(req.user)
+        console.log(user)
+        console.log(info)
+      })
+    }
+  })(req, res, next)
+  // const username = req.body.username
+  // const password = req.body.password
+  // db.serialize(() => {
+  //   db.get(`SELECT username, password FROM admin WHERE username="${username}";`, async (err, result) => {
+  //     try {
+  //       // if(err) {
+  //       //   throw new Error(err)
+  //       // }      
+  //       const dbUsername = result.username
+  //       const dbPassword = result.password
+  //       console.log(dbUsername)
+  //       console.log(dbPassword)
 
-        const match = await bcrypt.compare(password, dbPassword)
+  //       const match = await bcrypt.compare(password, dbPassword)
 
-        if(match) {
-          res.send("Passwords match")
-        } else {
-          res.send("Password is incorrect")
-        }
-      } catch(e) {
-        console.log(e)
-        res.send("The username is does not exist")
-      }
-    })
-  })
+  //       if(match) {
+  //         res.send("Passwords match")
+  //       } else {
+  //         res.send("Password is incorrect")
+  //       }
+  //     } catch(e) {
+  //       console.log(e)
+  //       res.send("The username is does not exist")
+  //     }
+  //   })
+  // })
 })
 
-  
-router.post('/admin/user', (req, res) => {
-    console.log(req.body)
+router.get('/admin/user', (req, res) => {
+  if(req.user) {
+    res.send(req.user)
+  } else {
+    res.send("You are not logged in, please login")
+  }
 })
 
 
