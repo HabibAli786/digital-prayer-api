@@ -39,7 +39,11 @@ module.exports = function(passport) {
 
    passport.deserializeUser((id, cb) => {
     db.get(`SELECT id, username, password FROM admin WHERE id="${id}";`, async (err, user) => {
-        cb(err, user);
+        // Select what you want to return to the client from the db request
+        const userInfo = {
+            username: user.username
+        }
+        cb(err, userInfo);
     })
    })
 }

@@ -59,14 +59,14 @@ router.post('/admin/login', (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if(err) throw err
     if(!user) {
-       res.send("Unsuccesfully Authenticated")
+       res.send('Unsuccessfully Authenticated')
     } else {
       req.logIn(user, err => {
         if(err) throw err;
-        res.send('Succesfully Authenticated')
+        res.send('Successfully Authenticated')
         console.log(req.user)
-        console.log(user)
-        console.log(info)
+        // console.log(user)
+        // console.log(info)
       })
     }
   })(req, res, next)
@@ -104,6 +104,11 @@ router.get('/admin/user', (req, res) => {
   } else {
     res.send("You are not logged in, please login")
   }
+})
+
+router.get('/admin/logout', (req, res) => {
+  req.logout();
+  res.send("Logged out")
 })
 
 
