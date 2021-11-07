@@ -64,7 +64,7 @@ router.post('/media/uploadTimetable', async(req, res) => {
             csvtojson().fromFile(`resources/${req.file.filename}`).then(source => {
                 // let current = []
                 let errorRows = []
-                let row = 1
+                let row = 0
                 source.forEach(element => {
                     let date = element.d_date
                     let spliceDate = new Date(date.slice(6,10), date.slice(3,5), date.slice(0,2))
@@ -73,8 +73,15 @@ router.post('/media/uploadTimetable', async(req, res) => {
                         errorRows.push(row)
                         // res.send(`Invalid Date - ensure the date is set to dd-mm-yyyy format. Please check row ${row}`)
                     } else {
-                        verfied = true
-                        console.log("It is correct")
+                        console.log("date is correct " + row)
+                        if(element.fajr_begins.length !==  5 || element.fajr_jamah.length !==  5 || element.sunrise.length !==  5  || element.zuhr_begins.length !==  5  || element.zuhr_jamah.length !==  5
+                            || element.asr_mithl_1.length !==  5 || element.asr_jamah.length !==  5  || element.maghrib_begins.length !==  5  || element.maghrib_jamah.length !==  5  || 
+                            element.isha_begins.length !==  5  || element.isha_jamah.length !==  5) {
+                                console.log(`this row is not correct ${row}`)
+                                errorRows.push(row)
+                            } else {
+                                console.log(`row is correct fully ${row}`)
+                            }
                         // console.log(spliceDate)
                         // console.log(spliceDate.getDate())
                     }
@@ -89,6 +96,8 @@ router.post('/media/uploadTimetable', async(req, res) => {
                         }
                         console.log("File has been removed")
                       })
+                } else {
+                    res.send("File has been uploaded successfully")
                 }
                 // console.log(current)
                 // res.json(current)
