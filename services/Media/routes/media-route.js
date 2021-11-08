@@ -64,7 +64,7 @@ router.post('/media/uploadTimetable', async(req, res) => {
             csvtojson().fromFile(`resources/${req.file.filename}`).then(source => {
                 // let current = []
                 let errorRows = []
-                let row = 0
+                let row = 2
                 source.forEach(element => {
                     let date = element.d_date
                     let spliceDate = new Date(date.slice(6,10), date.slice(3,5), date.slice(0,2))
@@ -73,15 +73,17 @@ router.post('/media/uploadTimetable', async(req, res) => {
                         errorRows.push(row)
                         // res.send(`Invalid Date - ensure the date is set to dd-mm-yyyy format. Please check row ${row}`)
                     } else {
-                        console.log("date is correct " + row)
-                        if(element.fajr_begins.length !==  5 || element.fajr_jamah.length !==  5 || element.sunrise.length !==  5  || element.zuhr_begins.length !==  5  || element.zuhr_jamah.length !==  5
-                            || element.asr_mithl_1.length !==  5 || element.asr_jamah.length !==  5  || element.maghrib_begins.length !==  5  || element.maghrib_jamah.length !==  5  || 
-                            element.isha_begins.length !==  5  || element.isha_jamah.length !==  5) {
-                                console.log(`this row is not correct ${row}`)
-                                errorRows.push(row)
-                            } else {
-                                console.log(`row is correct fully ${row}`)
+                        console.log("date is correct for row " + row)
+                        for(column in element) {
+                            if(column === "d_date") {
+                                continue;
                             }
+                            if(element[column].length !== 5) {
+                                console.log("this is incorrect " + row)
+                                errorRows.push(row)
+                            }
+                            console.log("this is correct " + row)
+                        }
                         // console.log(spliceDate)
                         // console.log(spliceDate.getDate())
                     }
