@@ -9,7 +9,7 @@ const csvtojson = require('csvtojson')
 const storage = multer.diskStorage({
     destination: './resources/',
     filename: function(req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+        cb(null, file.originalname)
     }
 })
 
@@ -69,22 +69,22 @@ router.post('/media/uploadTimetable', async(req, res) => {
                     let date = element.d_date
                     let spliceDate = new Date(date.slice(6,10), date.slice(3,5), date.slice(0,2))
                     if(isNaN(spliceDate.getTime())) {
-                        console.log(`Invalid Date - ensure the date is set to dd-mm-yyyy format + ${row}`)
+                        // console.log(`Invalid Date - ensure the date is set to dd-mm-yyyy format + ${row}`)
                         errorRows.push(row)
                         // res.send(`Invalid Date - ensure the date is set to dd-mm-yyyy format. Please check row ${row}`)
                     } else {
-                        console.log("date is correct for row " + row)
+                        // console.log("date is correct for row " + row)
                         for(column in element) {
                             if(column === "d_date") {
                                 continue;
                             }
                             if(element[column].length !== 5) {
-                                console.log("this is incorrect " + row)
+                                // console.log("this is incorrect " + row)
                                 if(errorRows[errorRows.length-1] !== row) {
                                     errorRows.push(row)
                                 }
                             }
-                            console.log("this is correct " + row)
+                            // console.log("this is correct " + row)
                         }
                         // console.log(spliceDate)
                         // console.log(spliceDate.getDate())
@@ -92,14 +92,14 @@ router.post('/media/uploadTimetable', async(req, res) => {
                     row += 1
                 });
                 if(errorRows.length >= 1) {
-                    res.send("Invalid Date - ensure the date is set to dd-mm-yyyy format - Here are the rows: " + errorRows)
                     fs.unlink(`./resources/${req.file.filename}`, (err) => {
                         if (err) {
                           console.error(err)
                           return
                         }
                         console.log("File has been removed")
-                      })
+                    })
+                    res.send("Invalid Date - ensure the date is set to dd-mm-yyyy format && time is in HH:MM format - Here are the rows with errors: " + errorRows)
                 } else {
                     res.send("File has been uploaded successfully")
                 }
