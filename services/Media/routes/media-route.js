@@ -80,7 +80,9 @@ router.post('/media/uploadTimetable', async(req, res) => {
                             }
                             if(element[column].length !== 5) {
                                 console.log("this is incorrect " + row)
-                                errorRows.push(row)
+                                if(errorRows[errorRows.length-1] !== row) {
+                                    errorRows.push(row)
+                                }
                             }
                             console.log("this is correct " + row)
                         }
