@@ -16,7 +16,8 @@ const storage = multer.diskStorage({
 const upload = multer({ 
     storage: storage,
     fileFilter: function(req, file, cb) {
-        if(file.mimetype === 'text/csv') {
+        console.log(file)
+        if(file.mimetype === 'text/csv' || file.mimetype === 'application/vnd.ms-excel') {
             cb(null, true)
         } else {
             cb("Error: This is not a csv file")
