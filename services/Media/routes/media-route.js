@@ -54,13 +54,15 @@ router.get('/media/slides/:id', async (req, res) => {
 })
 
 router.post('/media/uploadTimetable', async(req, res) => {
-    // res.send('We have recieved ' + req.body.hello)
+    // console.log('We have recieved request')
 
     upload(req, res, (err) => {
         if(err) {
             res.send(err)
         } else {
             console.log(req.file)
+
+            try {
 
             csvtojson().fromFile(`resources/${req.file.filename}`).then(source => {
                 // let current = []
@@ -111,6 +113,9 @@ router.post('/media/uploadTimetable', async(req, res) => {
 
             // res.send(req)
             // res.send(req.file)
+            } catch (err) {
+                res.send("Something went wrong")
+            }
         }
     })
 
