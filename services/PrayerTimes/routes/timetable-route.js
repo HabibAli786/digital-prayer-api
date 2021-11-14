@@ -65,14 +65,39 @@ router.get('/prayertimes/:date', (req, res) => {
     } catch {
         res.json({error: "No prayer times matching your date"})
     }
-}) 
+})
 
-// router.get('/prayertimes/currentdate', (req, res) => {
-//     res.json({
-//         day: generateTimetable.currentDay(), 
-//         date : generateTimetable.fullDate() 
-//     })
-// })
+router.get('/prayertimes/request/all', (req, res) => {
+    console.log("I am running")
+
+    csvtojson().fromFile(`resources/prayertimes-2021.csv`).then(source => {
+        let arr = []
+        let rowNum = 0
+
+        console.log(source)
+
+        source.forEach(element => {
+            
+            arr.push({
+                row: rowNum,
+                date: element.d_date,
+                fajr_begins: element.fajr_begins,
+                fajr_jamaat: element.fajr_jamah,
+                sunrise: element.sunrise,
+                zuhr_begins: element.zuhr_begins,
+                zuhr_jamaat: element.zuhr_jamah,
+                asr_begins: element.asr_mithl_1,
+                asr_jamaat: element.asr_jamah,
+                maghrib_begins: element.maghrib_begins,
+                maghrib_jamaat: element.maghrib_jamah,
+                isha_begins: element.isha_begins,
+                isha_jamaat: element.isha_jamah,
+            })
+            rowNum += 1
+        });
+        res.json(arr)
+    })
+})
 
 router.get('/prayertimes/logo', (req, res) => {
     res.sendFile(process.cwd() + "/resources/iqra-logo.png")
