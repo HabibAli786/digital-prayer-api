@@ -1,6 +1,9 @@
 const router = require('express').Router()
-const generateTimetable = require('../generate-timetable')
+const fs = require("fs")
 const csvtojson = require('csvtojson')
+const jsontocsv = require("json2csv").parse
+
+const generateTimetable = require('../generate-timetable')
 
 router.get('/prayertimes', (req, res) => {
     const date = generateTimetable.fullDate()
@@ -80,23 +83,34 @@ router.get('/prayertimes/request/all', (req, res) => {
             
             arr.push({
                 row: rowNum,
-                date: element.d_date,
+                d_date: element.d_date,
                 fajr_begins: element.fajr_begins,
-                fajr_jamaat: element.fajr_jamah,
+                fajr_jamah: element.fajr_jamah,
                 sunrise: element.sunrise,
                 zuhr_begins: element.zuhr_begins,
-                zuhr_jamaat: element.zuhr_jamah,
-                asr_begins: element.asr_mithl_1,
-                asr_jamaat: element.asr_jamah,
+                zuhr_jamah: element.zuhr_jamah,
+                asr_mithl_1: element.asr_mithl_1,
+                asr_jamah: element.asr_jamah,
                 maghrib_begins: element.maghrib_begins,
-                maghrib_jamaat: element.maghrib_jamah,
+                maghrib_jamah: element.maghrib_jamah,
                 isha_begins: element.isha_begins,
-                isha_jamaat: element.isha_jamah,
+                isha_jamah: element.isha_jamah,
             })
             rowNum += 1
         });
         res.json(arr)
     })
+})
+
+router.post('/prayertimes', (req, res) => {
+    // console.log(req.body)
+    const data = req.body
+    const csv = jsontocsv(data, { fields : [
+        "row", "d_date", "fajr_begins", "fajr_jamah", "sunrise", "zuhr_begins", "zuhr_jamah", "asr_mithl_1", "asr_jamah", "maghrib_begins", "maghrib_jamah", "isha_begins", "isha_jamah"] 
+    })
+    // console.log(csv)
+    fs.writeFileSync("resources/prayertimes-2021.csv", csv)
+    res.send("All is good")
 })
 
 router.get('/prayertimes/logo', (req, res) => {
