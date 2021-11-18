@@ -15,12 +15,12 @@ router.get('/prayertimes', (req, res) => {
             if(element.d_date == date) {
                 current.push(
                     {id: 0, date: date, weekday: generateTimetable.weekday(), dayMonth: generateTimetable.dayMonthYear()},
-                    {id: 1, salah: "Fajr", startTime: element.fajr_begins, jamaat: element.fajr_jamah},
+                    {id: 1, salah: "Fajr", startTime: element.fajr_begins, jamaat: element.fajr_jamaat},
                     {id: 2, salah: "Sunrise", startTime: element.sunrise},
-                    {id: 3, salah: "Zuhr", startTime: element.zuhr_begins, jamaat: element.zuhr_jamah},
-                    {id: 4, salah: "Asr", startTime: element.asr_mithl_1, jamaat: element.asr_jamah},
-                    {id: 5, salah: "Maghrib", startTime: element.maghrib_begins, jamaat: element.maghrib_jamah},
-                    {id: 6, salah: "Isha", startTime: element.isha_begins, jamaat: element.isha_jamah},
+                    {id: 3, salah: "Zuhr", startTime: element.zuhr_begins, jamaat: element.zuhr_jamaat},
+                    {id: 4, salah: "Asr", startTime: element.asr_begins, jamaat: element.asr_jamaat},
+                    {id: 5, salah: "Maghrib", startTime: element.maghrib_begins, jamaat: element.maghrib_jamaat},
+                    {id: 6, salah: "Isha", startTime: element.isha_begins, jamaat: element.isha_jamaat},
                 )
                 // console.log(element)
             }
@@ -52,12 +52,12 @@ router.get('/prayertimes/:date', (req, res) => {
                 if(element.d_date == newDate) {
                     current.push(
                         {id: 0, date: date, weekday: generateTimetable.weekday(newDate), dayMonthYear: generateTimetable.dayMonthYear(newDate)},
-                        {id: 1, salah: "Fajr", startTime: element.fajr_begins, jamaat: element.fajr_jamah},
+                        {id: 1, salah: "Fajr", startTime: element.fajr_begins, jamaat: element.fajr_jamaat},
                         {id: 2, salah: "Sunrise", startTime: element.sunrise},
-                        {id: 3, salah: "Zuhr", startTime: element.zuhr_begins, jamaat: element.zuhr_jamah},
-                        {id: 4, salah: "Asr", startTime: element.asr_mithl_1, jamaat: element.asr_jamah},
-                        {id: 5, salah: "Maghrib", startTime: element.maghrib_begins, jamaat: element.maghrib_jamah},
-                        {id: 6, salah: "Isha", startTime: element.isha_begins, jamaat: element.isha_jamah},
+                        {id: 3, salah: "Zuhr", startTime: element.zuhr_begins, jamaat: element.zuhr_jamaat},
+                        {id: 4, salah: "Asr", startTime: element.asr_begins, jamaat: element.asr_jamaat},
+                        {id: 5, salah: "Maghrib", startTime: element.maghrib_begins, jamaat: element.maghrib_jamaat},
+                        {id: 6, salah: "Isha", startTime: element.isha_begins, jamaat: element.isha_jamaat},
                     )
                     // console.log(element)
                 }
@@ -85,16 +85,16 @@ router.get('/prayertimes/request/all', (req, res) => {
                 row: rowNum,
                 d_date: element.d_date,
                 fajr_begins: element.fajr_begins,
-                fajr_jamah: element.fajr_jamah,
+                fajr_jamaat: element.fajr_jamaat,
                 sunrise: element.sunrise,
                 zuhr_begins: element.zuhr_begins,
-                zuhr_jamah: element.zuhr_jamah,
-                asr_mithl_1: element.asr_mithl_1,
-                asr_jamah: element.asr_jamah,
+                zuhr_jamaat: element.zuhr_jamaat,
+                asr_begins: element.asr_begins,
+                asr_jamaat: element.asr_jamaat,
                 maghrib_begins: element.maghrib_begins,
-                maghrib_jamah: element.maghrib_jamah,
+                maghrib_jamaat: element.maghrib_jamaat,
                 isha_begins: element.isha_begins,
-                isha_jamah: element.isha_jamah,
+                isha_jamaat: element.isha_jamaat,
             })
             rowNum += 1
         });
@@ -106,7 +106,7 @@ router.post('/prayertimes', (req, res) => {
     // console.log(req.body)
     const data = req.body
     const csv = jsontocsv(data, { fields : [
-        "row", "d_date", "fajr_begins", "fajr_jamah", "sunrise", "zuhr_begins", "zuhr_jamah", "asr_mithl_1", "asr_jamah", "maghrib_begins", "maghrib_jamah", "isha_begins", "isha_jamah"] 
+        "row", "d_date", "fajr_begins", "fajr_jamaat", "sunrise", "zuhr_begins", "zuhr_jamaat", "asr_begins", "asr_jamaat", "maghrib_begins", "maghrib_jamaat", "isha_begins", "isha_jamaat"] 
     })
     // console.log(csv)
     fs.writeFileSync("resources/prayertimes-2021.csv", csv)

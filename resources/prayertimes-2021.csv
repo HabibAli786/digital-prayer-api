@@ -1,4 +1,4 @@
-d_date,fajr_begins,fajr_jamah,sunrise,zuhr_begins,zuhr_jamah,asr_mithl_1,asr_jamah,maghrib_begins,maghrib_jamah,isha_begins,isha_jamah,is_ramadan,hijri_date
+d_date,fajr_begins,fajr_jamaat,sunrise,zuhr_begins,zuhr_jamaat,asr_begins,asr_jamaat,maghrib_begins,maghrib_jamaat,isha_begins,isha_jamaat,is_ramadan,hijri_date
 01/01/2021,06:10,06:30,08:16,12:09,13:00,14:17,14:45,16:03,16:03,18:06,19:30,0,0
 02/01/2021,06:10,06:30,08:16,12:10,13:00,14:18,14:45,16:04,16:04,18:07,19:30,0,0
 03/01/2021,06:10,06:30,08:16,12:10,13:00,14:19,14:45,16:05,16:05,18:08,19:30,0,0
