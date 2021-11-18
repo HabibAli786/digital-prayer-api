@@ -71,13 +71,10 @@ router.get('/prayertimes/:date', (req, res) => {
 })
 
 router.get('/prayertimes/request/all', (req, res) => {
-    console.log("I am running")
 
     csvtojson().fromFile(`resources/prayertimes-2021.csv`).then(source => {
         let arr = []
         let rowNum = 0
-
-        console.log(source)
 
         source.forEach(element => {
             
