@@ -26,7 +26,7 @@ const upload = multer({
 }).single('prayertimes')
 
 router.get('/media/logo', (req, res) => {
-    res.sendFile(process.cwd() + "/resources/iqra-logo.png")
+    res.sendFile(process.cwd() + "/resources/logo.png")
 })
 
 router.get('/media/slides', async (req, res) => {
