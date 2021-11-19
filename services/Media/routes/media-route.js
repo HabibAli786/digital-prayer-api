@@ -25,8 +25,32 @@ const upload = multer({
     } 
 }).single('prayertimes')
 
+const uploadLogo = multer({
+    storage: storage,
+    fileFilter: function(req, file, cb) {
+        console.log(file)
+        if(file.mimetype === 'image/png') {
+            cb(null, true)
+        } else {
+            cb("Error: This is not a png file")
+        }
+    }
+}).single('logo')
+
 router.get('/media/logo', (req, res) => {
     res.sendFile(process.cwd() + "/resources/logo.png")
+})
+
+router.post('/media/logo', (req, res) => {
+    uploadLogo(req, res, (err) => {
+        if(err) {
+            console.log(err)
+            res.send(err)
+        } else {
+            console.log(req.file.filename)
+            res.send("File has been uploaded successfully")
+        }
+    })
 })
 
 router.get('/media/slides', async (req, res) => {
