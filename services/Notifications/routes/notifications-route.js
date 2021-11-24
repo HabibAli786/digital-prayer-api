@@ -29,7 +29,6 @@ router.get('/notifications', (req, res) => {
           }
         })
     })
-    // res.json({ notifications: notifications })
 })
 
 router.post('/notifications/delete', (req, res) => {
