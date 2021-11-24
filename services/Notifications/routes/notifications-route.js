@@ -41,7 +41,7 @@ router.post('/notifications/delete', (req, res) => {
             throw new Error(err)
           }
           res.send("Notification has been deleted")
-          console.log(deleteElment + " notification has been deleted")
+          console.log(deleteElement + " notification has been deleted")
         })
     })
     // console.log(notifications)
