@@ -5,6 +5,7 @@ const { promisify } = require('util')
 const multer  = require('multer')
 const path = require('path')
 const csvtojson = require('csvtojson')
+const e = require('express')
 
 const storage = multer.diskStorage({
     destination: './resources/',
@@ -75,6 +76,18 @@ router.get('/media/slides/:id', async (req, res) => {
     } catch(e) {
         console.log("There has been an error with this request: " + e)
     }
+})
+
+router.post('/media/slides/admin/delete', async (req, res) => {
+    const file = req.body.slideToDelete
+    fs.unlink(`resources/slides/${file}`, (err) => {
+        if (err) {
+            console.log(err)
+            res.send(err)
+        } else {
+            console.log(`${file} was deleted`);
+        }
+    });
 })
 
 router.post('/media/uploadTimetable', async(req, res) => {
