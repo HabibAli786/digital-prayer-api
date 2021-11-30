@@ -5,10 +5,19 @@ const { promisify } = require('util')
 const multer  = require('multer')
 const path = require('path')
 const csvtojson = require('csvtojson')
+const e = require('express')
 
 const storage = multer.diskStorage({
     destination: './resources/',
     filename: function(req, file, cb) {
+        cb(null, file.originalname)
+    }
+})
+
+const slideStorage = multer.diskStorage({
+    destination: './resources/slides',
+    filename: function(req, file, cb) {
+        console.log(file)
         cb(null, file.originalname)
     }
 })
@@ -36,6 +45,18 @@ const uploadLogo = multer({
         }
     }
 }).single('logo')
+
+const uploadFile = multer({
+    storage: slideStorage,
+    fileFilter: function(req, file, cb) {
+        console.log(file)
+        if(file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
+            cb(null, true)
+        } else {
+            cb("Error: This is not a jpg file")
+        }
+    }
+}).single('slide')
 
 router.get('/media/logo', (req, res) => {
     res.sendFile(process.cwd() + "/resources/logo.png")
@@ -71,10 +92,35 @@ router.get('/media/slides', async (req, res) => {
 router.get('/media/slides/:id', async (req, res) => {
     let id = req.params.id
     try {
-        res.sendFile(process.cwd() + `/resources/slides/slide${id}.jpg`)
+        res.sendFile(process.cwd() + `/resources/slides/${id}`)
     } catch(e) {
         console.log("There has been an error with this request: " + e)
     }
+})
+
+router.post('/media/slides/admin/delete', async (req, res) => {
+    const file = req.body.slideToDelete
+    fs.unlink(`resources/slides/${file}`, (err) => {
+        if (err) {
+            console.log(err)
+            res.send(err)
+        } else {
+            console.log(`${file} was deleted`);
+            res.send(`${file} was deleted`)
+        }
+    });
+})
+
+router.post('/media/slides/admin/add', async (req, res) => {
+    uploadFile(req, res, (err) => {
+        if(err) {
+            console.log(err)
+            res.send(err)
+        } else {
+            console.log(req.file.filename)
+            res.send("File has been uploaded successfully")
+        }
+    })
 })
 
 router.post('/media/uploadTimetable', async(req, res) => {
