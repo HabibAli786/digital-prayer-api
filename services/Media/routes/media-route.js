@@ -17,6 +17,7 @@ const storage = multer.diskStorage({
 const slideStorage = multer.diskStorage({
     destination: './resources/slides',
     filename: function(req, file, cb) {
+        console.log(file)
         cb(null, file.originalname)
     }
 })
