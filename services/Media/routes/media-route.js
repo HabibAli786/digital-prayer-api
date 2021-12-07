@@ -53,7 +53,7 @@ const uploadFile = multer({
         if(file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
             cb(null, true)
         } else {
-            cb("Error: This is not a jpg file")
+            cb("Error: This is not a jpg/jpeg file")
         }
     }
 }).single('slide')
