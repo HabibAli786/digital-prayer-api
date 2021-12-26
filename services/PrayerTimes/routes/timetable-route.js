@@ -5,6 +5,25 @@ const jsontocsv = require("json2csv").parse
 
 const generateTimetable = require('../generate-timetable')
 
+router.get('/hijriDate', (req, res) => {
+    const date = generateTimetable.fullDate()
+
+    csvtojson().fromFile(`resources/prayertimes-2021.csv`).then(source => {
+        let current = []
+
+        source.forEach(element => {
+            if(element.d_date == date) {
+                current.push(
+                    {hijriDate: element.hijri_date, hijriMonth: element.hijri_month},
+                )
+                // console.log(element)
+            }
+        });
+        // console.log(current)
+        res.json(current)
+    })
+})
+
 router.get('/prayertimes', (req, res) => {
     const date = generateTimetable.fullDate()
 
@@ -21,6 +40,7 @@ router.get('/prayertimes', (req, res) => {
                     {id: 4, salah: "Asr", startTime: element.asr_begins, jamaat: element.asr_jamaat},
                     {id: 5, salah: "Maghrib", startTime: element.maghrib_begins, jamaat: element.maghrib_jamaat},
                     {id: 6, salah: "Isha", startTime: element.isha_begins, jamaat: element.isha_jamaat},
+                    {id: 7, hijriDate: element.hijri_date, hijriMonth: element.hijri_month}
                 )
                 // console.log(element)
             }
@@ -58,6 +78,7 @@ router.get('/prayertimes/:date', (req, res) => {
                         {id: 4, salah: "Asr", startTime: element.asr_begins, jamaat: element.asr_jamaat},
                         {id: 5, salah: "Maghrib", startTime: element.maghrib_begins, jamaat: element.maghrib_jamaat},
                         {id: 6, salah: "Isha", startTime: element.isha_begins, jamaat: element.isha_jamaat},
+                        {id: 7, hijriDate: element.hijri_date, hijriMonth: element.hijri_month}
                     )
                     // console.log(element)
                 }

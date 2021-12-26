@@ -41,7 +41,7 @@ const uploadLogo = multer({
         if(file.mimetype === 'image/png') {
             cb(null, true)
         } else {
-            cb("Error: This is not a png file")
+            cb("This is not a png file")
         }
     }
 }).single('logo')
@@ -172,7 +172,7 @@ router.post('/media/uploadTimetable', async(req, res) => {
                         }
                         console.log("File has been removed")
                     })
-                    res.send("Invalid Date - ensure the date is set to dd-mm-yyyy format && time is in HH:MM format - Here are the rows with errors: " + errorRows)
+                    res.send("Invalid Date - ensure the date is set to dd-mm-yyyy format & time is in HH:MM format \n Here are the rows with errors: " + errorRows)
                 } else {
                     res.send("File has been uploaded successfully")
                 }
