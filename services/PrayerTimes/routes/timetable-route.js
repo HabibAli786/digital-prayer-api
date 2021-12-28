@@ -14,7 +14,11 @@ router.get('/hijriDate', (req, res) => {
         source.forEach(element => {
             if(element.d_date == date) {
                 current.push(
-                    {hijriDate: element.hijri_date, hijriMonth: element.hijri_month},
+                    {
+                        hijriDate: element.hijri_date, 
+                        hijriMonth: element.hijri_month,
+                        hijriYear: element.hijri_year
+                    }
                 )
                 // console.log(element)
             }
@@ -40,7 +44,7 @@ router.get('/prayertimes', (req, res) => {
                     {id: 4, salah: "Asr", startTime: element.asr_begins, jamaat: element.asr_jamaat},
                     {id: 5, salah: "Maghrib", startTime: element.maghrib_begins, jamaat: element.maghrib_jamaat},
                     {id: 6, salah: "Isha", startTime: element.isha_begins, jamaat: element.isha_jamaat},
-                    {id: 7, hijriDate: element.hijri_date, hijriMonth: element.hijri_month}
+                    {id: 7, hijriDate: element.hijri_date, hijriMonth: element.hijri_month, hijriYear: element.hijri_year}
                 )
                 // console.log(element)
             }
@@ -78,7 +82,7 @@ router.get('/prayertimes/:date', (req, res) => {
                         {id: 4, salah: "Asr", startTime: element.asr_begins, jamaat: element.asr_jamaat},
                         {id: 5, salah: "Maghrib", startTime: element.maghrib_begins, jamaat: element.maghrib_jamaat},
                         {id: 6, salah: "Isha", startTime: element.isha_begins, jamaat: element.isha_jamaat},
-                        {id: 7, hijriDate: element.hijri_date, hijriMonth: element.hijri_month}
+                        {id: 7, hijriDate: element.hijri_date, hijriMonth: element.hijri_month, hijriYear: element.hijri_year}
                     )
                     // console.log(element)
                 }
@@ -113,6 +117,9 @@ router.get('/prayertimes/request/all', (req, res) => {
                 maghrib_jamaat: element.maghrib_jamaat,
                 isha_begins: element.isha_begins,
                 isha_jamaat: element.isha_jamaat,
+                hijri_date: element.hijri_date,
+                hijri_month: element.hijri_month,
+                hijri_year: element.hijri_year
             })
             rowNum += 1
         });
@@ -124,11 +131,13 @@ router.post('/prayertimes', (req, res) => {
     // console.log(req.body)
     const data = req.body
     const csv = jsontocsv(data, { fields : [
-        "row", "d_date", "fajr_begins", "fajr_jamaat", "sunrise", "zuhr_begins", "zuhr_jamaat", "asr_begins", "asr_jamaat", "maghrib_begins", "maghrib_jamaat", "isha_begins", "isha_jamaat"] 
+        "row", "d_date", "fajr_begins", "fajr_jamaat", "sunrise", "zuhr_begins", "zuhr_jamaat", 
+        "asr_begins", "asr_jamaat", "maghrib_begins", "maghrib_jamaat", "isha_begins", "isha_jamaat", 
+        "hijri_date", "hijri_month", "hijri_year" ] 
     })
     // console.log(csv)
     fs.writeFileSync("resources/prayertimes-2021.csv", csv)
-    res.send("All is good")
+    res.send("Success")
 })
 
 // router.get('/prayertimes/logo', (req, res) => {

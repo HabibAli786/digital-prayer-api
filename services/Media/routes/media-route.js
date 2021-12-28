@@ -29,7 +29,7 @@ const upload = multer({
         if(file.mimetype === 'text/csv' || file.mimetype === 'application/vnd.ms-excel') {
             cb(null, true)
         } else {
-            cb("Error: This is not a csv file")
+            cb("This is not a csv file")
         }
     } 
 }).single('prayertimes')
@@ -148,11 +148,13 @@ router.post('/media/uploadTimetable', async(req, res) => {
                     } else {
                         // console.log("date is correct for row " + row)
                         for(column in element) {
-                            if(column === "d_date") {
+                            if(column === "d_date" || column === "hijri_date" || 
+                               column === "hijri_month" || column === "hijri_year" || column === "row") {
                                 continue;
                             }
                             if(element[column].length !== 5) {
                                 // console.log("this is incorrect " + row)
+                                console.log(element[column])
                                 if(errorRows[errorRows.length-1] !== row) {
                                     errorRows.push(row)
                                 }
