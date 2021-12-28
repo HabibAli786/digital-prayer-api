@@ -140,8 +140,4 @@ router.post('/prayertimes', (req, res) => {
     res.send("Success")
 })
 
-// router.get('/prayertimes/logo', (req, res) => {
-//     res.sendFile(process.cwd() + "/resources/iqra-logo.png")
-// })
-
 module.exports = router
