@@ -2,6 +2,7 @@ const router = require('express').Router()
 const sqlite = require('sqlite3').verbose()
 const bcrypt = require('bcrypt');
 const passport = require("passport");
+const jwt = require('jsonwebtoken')
 const passportLocal = require("passport-local").Strategy;
 
 const admin = require('../admin')
@@ -63,6 +64,8 @@ router.post('/admin/login', (req, res, next) => {
     } else {
       req.logIn(user, err => {
         if(err) throw err;
+        const token = jwt.sign(user, 'secertcode')
+        res.cookie('authToken', token)
         res.send('Successfully Authenticated')
         console.log(req.user)
         // console.log(user)
@@ -99,6 +102,7 @@ router.post('/admin/login', (req, res, next) => {
 })
 
 router.get('/admin/user', (req, res) => {
+  console.log(req.user)
   if(req.user) {
     res.send(req.user)
   } else {
@@ -108,6 +112,7 @@ router.get('/admin/user', (req, res) => {
 
 router.get('/admin/logout', (req, res) => {
   req.logout();
+  console.log("Logged out")
   res.send("Logged out")
 })
 
