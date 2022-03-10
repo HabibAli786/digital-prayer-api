@@ -64,8 +64,6 @@ router.post('/admin/login', (req, res, next) => {
     } else {
       req.logIn(user, err => {
         if(err) throw err;
-        const token = jwt.sign(user, 'secertcode')
-        res.cookie('authToken', token)
         res.send('Successfully Authenticated')
         console.log(req.user)
         // console.log(user)
@@ -102,10 +100,10 @@ router.post('/admin/login', (req, res, next) => {
 })
 
 router.get('/admin/user', (req, res) => {
-  console.log(req.user)
   if(req.user) {
     res.send(req.user)
   } else {
+    console.log("User not logged in")
     res.send("You are not logged in, please login")
   }
 })
