@@ -8,7 +8,7 @@ const generateTimetable = require('../generate-timetable')
 router.get('/hijriDate', (req, res) => {
     const date = generateTimetable.fullDate()
 
-    csvtojson().fromFile(`resources/prayertimes-2021.csv`).then(source => {
+    csvtojson().fromFile(`resources/prayertimes.csv`).then(source => {
         let current = []
 
         source.forEach(element => {
@@ -31,7 +31,7 @@ router.get('/hijriDate', (req, res) => {
 router.get('/prayertimes', (req, res) => {
     const date = generateTimetable.fullDate()
 
-    csvtojson().fromFile(`resources/prayertimes-2021.csv`).then(source => {
+    csvtojson().fromFile(`resources/prayertimes.csv`).then(source => {
         let current = []
 
         source.forEach(element => {
@@ -69,7 +69,7 @@ router.get('/prayertimes/:date', (req, res) => {
 
     try {
 
-        csvtojson().fromFile(`resources/prayertimes-2021.csv`).then(source => {
+        csvtojson().fromFile(`resources/prayertimes.csv`).then(source => {
             let current = []
 
             source.forEach(element => {
@@ -97,7 +97,7 @@ router.get('/prayertimes/:date', (req, res) => {
 
 router.get('/prayertimes/request/all', (req, res) => {
 
-    csvtojson().fromFile(`resources/prayertimes-2021.csv`).then(source => {
+    csvtojson().fromFile(`resources/prayertimes.csv`).then(source => {
         let arr = []
         let rowNum = 0
 
@@ -136,7 +136,7 @@ router.post('/prayertimes', (req, res) => {
         "hijri_date", "hijri_month", "hijri_year" ] 
     })
     // console.log(csv)
-    fs.writeFileSync("resources/prayertimes-2021.csv", csv)
+    fs.writeFileSync("resources/prayertimes", csv)
     res.send("Success")
 })
 
