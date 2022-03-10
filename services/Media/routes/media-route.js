@@ -27,7 +27,11 @@ const upload = multer({
     fileFilter: function(req, file, cb) {
         console.log(file)
         if(file.mimetype === 'text/csv' || file.mimetype === 'application/vnd.ms-excel') {
-            cb(null, true)
+            if(file.originalname !== "prayertimes.csv") {
+                cb("Error: Please ensure filename is prayertimes.csv")
+            } else {
+                cb(null, true)
+            }
         } else {
             cb("This is not a csv file")
         }
@@ -38,10 +42,10 @@ const uploadLogo = multer({
     storage: storage,
     fileFilter: function(req, file, cb) {
         console.log(file)
-        if(file.mimetype === 'image/png') {
+        if(file.mimetype === 'image/png' && file.originalname === 'logo.png') {
             cb(null, true)
         } else {
-            cb("This is not a png file")
+            cb("This is not a png file or filename is not logo.png")
         }
     }
 }).single('logo')
