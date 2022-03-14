@@ -136,7 +136,7 @@ router.post('/prayertimes', (req, res) => {
         "hijri_date", "hijri_month", "hijri_year" ] 
     })
     // console.log(csv)
-    fs.writeFileSync("resources/prayertimes", csv)
+    fs.writeFileSync("resources/prayertimes.csv", csv)
     res.send("Success")
 })
 
