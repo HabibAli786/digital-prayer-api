@@ -78,6 +78,10 @@ router.post('/media/logo', (req, res) => {
     })
 })
 
+router.get('/media/secondary-image', (req, res) => {
+    res.sendFile(process.cwd() + "/resources/secondary-image.png")
+})
+
 router.get('/media/slides', async (req, res) => {
     fs.readdir("./resources/slides", (err, files) => {
         try {
