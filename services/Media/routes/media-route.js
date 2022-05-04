@@ -10,7 +10,7 @@ const e = require('express')
 const storage = multer.diskStorage({
     destination: './resources/',
     filename: function(req, file, cb) {
-        cb(null, file.originalname)
+        cb(null, 'prayertimes-copy.csv')
     }
 })
 
@@ -36,7 +36,7 @@ const upload = multer({
             cb("This is not a csv file")
         }
     } 
-}).single('prayertimes')
+}).single('prayertimes-copy')
 
 const uploadLogo = multer({
     storage: storage,
@@ -142,7 +142,7 @@ router.post('/media/uploadTimetable', async(req, res) => {
 
             try {
 
-            csvtojson().fromFile(`resources/${req.file.filename}`).then(source => {
+            csvtojson().fromFile(`resources/prayertimes-copy.csv`).then(source => {
                 // let current = []
                 let errorRows = []
                 let row = 2
@@ -175,15 +175,30 @@ router.post('/media/uploadTimetable', async(req, res) => {
                     row += 1
                 });
                 if(errorRows.length >= 1) {
-                    fs.unlink(`./resources/${req.file.filename}`, (err) => {
+                    fs.unlink(`./resources/prayertimes-copy.csv`, (err) => {
                         if (err) {
                           console.error(err)
                           return
                         }
-                        console.log("File has been removed")
+                        console.log("Uploaded file has been removed")
                     })
                     res.send("Invalid Date - ensure the date is set to dd-mm-yyyy format & time is in HH:MM format \n Here are the rows with errors: " + errorRows)
                 } else {
+                    fs.unlink('./resources/prayertimes.csv', err => {
+                        if(err) {
+                            console.log(err)
+                        } else {
+                            console.log("Old file removed")
+                        }
+                    })
+
+                    fs.rename('./resources/prayertimes-copy.csv', './resources/prayertimes.csv', err => {
+                        if(err) {
+                            console.log(err)
+                        } else {
+                            console.log("New file uploaded")
+                        }
+                    })
                     res.send("File has been uploaded successfully")
                 }
                 // console.log(current)
