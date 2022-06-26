@@ -50,6 +50,18 @@ const uploadLogo = multer({
     }
 }).single('logo')
 
+const uploadSecondaryImage = multer({
+    storage: storage,
+    fileFilter: function(req, file, cb) {
+        console.log(file)
+        if(file.mimetype === 'image/png' && file.originalname === 'secondary-image.png') {
+            cb(null, true)
+        } else {
+            cb("This is not a png file or filename is not secondary-image.png")
+        }
+    }
+}).single('secondary-image')
+
 const uploadFile = multer({
     storage: slideStorage,
     fileFilter: function(req, file, cb) {
@@ -80,6 +92,19 @@ router.post('/media/logo', (req, res) => {
 
 router.get('/media/secondary-image', (req, res) => {
     res.sendFile(process.cwd() + "/resources/secondary-image.png")
+})
+
+router.post('/media/secondary-image', (req, res) => {
+    uploadSecondaryImage(req, res, (err) => {
+        console.log(req.headers)
+        if(err) {
+            console.log(err)
+            res.send(err)
+        } else {
+            console.log(req.file.filename)
+            res.send("File has been uploaded successfully")
+        }
+    })
 })
 
 router.get('/media/slides', async (req, res) => {
