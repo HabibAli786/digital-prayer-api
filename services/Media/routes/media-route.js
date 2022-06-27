@@ -14,6 +14,20 @@ const storage = multer.diskStorage({
     }
 })
 
+const logoStorage = multer.diskStorage({
+    destination: './resources/',
+    filename: function(req, file, cb) {
+        cb(null, 'logo.png')
+    }
+})
+
+const SecondaryImageStorage = multer.diskStorage({
+    destination: './resources/',
+    filename: function(req, file, cb) {
+        cb(null, 'secondary-image.png')
+    }
+})
+
 const slideStorage = multer.diskStorage({
     destination: './resources/slides',
     filename: function(req, file, cb) {
@@ -39,7 +53,7 @@ const upload = multer({
 }).single('prayertimes-copy')
 
 const uploadLogo = multer({
-    storage: storage,
+    storage: logoStorage,
     fileFilter: function(req, file, cb) {
         console.log(file)
         if(file.mimetype === 'image/png' && file.originalname === 'logo.png') {
@@ -51,7 +65,7 @@ const uploadLogo = multer({
 }).single('logo')
 
 const uploadSecondaryImage = multer({
-    storage: storage,
+    storage: SecondaryImageStorage,
     fileFilter: function(req, file, cb) {
         console.log(file)
         if(file.mimetype === 'image/png' && file.originalname === 'secondary-image.png') {
@@ -96,7 +110,6 @@ router.get('/media/secondary-image', (req, res) => {
 
 router.post('/media/secondary-image', (req, res) => {
     uploadSecondaryImage(req, res, (err) => {
-        console.log(req.headers)
         if(err) {
             console.log(err)
             res.send(err)
