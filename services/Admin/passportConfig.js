@@ -6,11 +6,10 @@ let db = new sqlite.Database('./services/Admin/admin.db', (err) => {
     if(err) {
       console.error(err.message)
     }
-    console.log("Connected to admin database")    
+    console.log("Connected to admin database for passport config")
 })
 
 module.exports = function(passport) {
-
     passport.use(
         new localStrategy((username, password, done) => {
             db.get(`SELECT id, username, password FROM admin WHERE username="${username}";`, async (err, user) => {
@@ -26,7 +25,7 @@ module.exports = function(passport) {
                       return done(null, false)
                     }
                   } catch(e) {
-                    console.log(e)
+                    console.log('Error caught:', e)
                     done(null, false)
                   }
             })

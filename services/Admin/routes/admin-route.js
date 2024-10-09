@@ -13,7 +13,7 @@ let db = new sqlite.Database('./services/Admin/admin.db', (err) => {
     if(err) {
       console.error(err.message)
     }
-    console.log("Connected to admin database")    
+    console.log("Connected to admin database for admin route")
 })
 
 router.post('/admin/register', (req, res) => {
