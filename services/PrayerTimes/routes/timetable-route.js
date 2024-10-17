@@ -176,8 +176,8 @@ router.get('/prayertimes/request/all', (req, res) => {
 
 router.get('/prayertimes/update/jummah', (req, res) => {
     console.log('received get request for jummah');
-    db.serialize(() => {
-        db.all('SELECT * FROM jummahTimes', async (err, result) => {
+    jummahDb.serialize(() => {
+        jummahDb.all('SELECT * FROM jummahTimes', async (err, result) => {
             if(err) {
                 res.send(err)
                 throw new Error(err)
