@@ -5,7 +5,7 @@ const jsontocsv = require("json2csv").parse
 const sqlite = require('sqlite3').verbose()
 
 const generateTimetable = require('../generate-timetable')
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 let jummahDb = new sqlite.Database('./services/PrayerTimes/jummah.db', (err) => {
     if(err) {

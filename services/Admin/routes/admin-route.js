@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const sqlite = require('sqlite3').verbose()
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const passport = require("passport");
 const jwt = require('jsonwebtoken')
 const passportLocal = require("passport-local").Strategy;

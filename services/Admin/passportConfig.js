@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const localStrategy = require('passport-local').Strategy
 const sqlite = require('sqlite3').verbose()
 
