@@ -235,7 +235,7 @@ router.post('/prayertimes/update/eventdate', async (req, res) => {
             if(result) {
                 console.log(result)
                 await updateEventDate(date)
-                res.send(`Updated date to`)
+                res.send(`Updated Date`)
             } else {
 
                 eventDb.run(`INSERT INTO eventDate (date) VALUES ('${date}');`, (err, result) => {
@@ -247,19 +247,11 @@ router.post('/prayertimes/update/eventdate', async (req, res) => {
                 })
             }
         })
-
-        // const result = db.get('SELECT * FROM admin', (err, results) => {
-        //   if(err) {
-        //     console.log(err)
-        //   } else {
-        //     console.log(results)
-        //   }
-        // })
     })
 
     // await updateEventDate(eventDate);
 
-    // res.send('Updated')
+    // res.send('Updated Event Date')
 });
 
 module.exports = router
